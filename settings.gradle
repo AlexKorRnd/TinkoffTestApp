@@ -1,2 +1,2 @@
-include ':app', ':feature-refillpoints-api', ':feature-refillpoints-impl', ':core-network-api',
+include ':app', ':feature-refillpoints-api', ':feature-refillpoints-impl', ':core-network-api', ':core-network-impl',
         ':core-utils'

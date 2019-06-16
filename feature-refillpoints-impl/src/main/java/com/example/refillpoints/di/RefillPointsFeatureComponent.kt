@@ -1,6 +1,7 @@
 package com.example.refillpoints.di
 
 import com.example.core.di.PerFeature
+import com.example.core_network_api.di.CoreNetworkApi
 import com.example.feature_refillpoints_api.RefillPointsFeatureApi
 import com.example.refillpoints.presentation.view.RefillPointsActivity
 import dagger.Component
@@ -51,7 +52,11 @@ abstract class RefillPointsFeatureComponent: RefillPointsFeatureApi {
 
     abstract fun refillPointsScreenComponent(): RefillPointsScreenComponent
 
-    @Component
+    @Component(
+        dependencies = [
+            CoreNetworkApi::class
+        ]
+    )
     @PerFeature
     interface RefillPointsFeatureDependenciesComponent: RefillPointsFeatureDependencies {}
 }
