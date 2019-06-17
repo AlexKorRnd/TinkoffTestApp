@@ -1,12 +1,12 @@
 package com.example.core_network_impl.data
 
-import android.content.Context
 import com.example.core_network_api.data.HttpClientApi
+import com.example.core_network_api.data.ResponseValidator
 import com.example.core_network_impl.BuildConfig
-import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
@@ -16,11 +16,10 @@ class HttpClientImpl @Inject constructor(): HttpClientApi {
         private const val REST_API_URL = "https://api.tinkoff.ru/v1/"
     }
 
-    override fun provideClient(context: Context): Retrofit {
+    override fun provideClient(): Retrofit {
         val okHttpClient = OkHttpClient.Builder()
 
         if (BuildConfig.DEBUG) {
-            Stetho.initializeWithDefaults(context)
             okHttpClient.addNetworkInterceptor(StethoInterceptor())
         }
 
@@ -29,6 +28,11 @@ class HttpClientImpl @Inject constructor(): HttpClientApi {
             .client(okHttpClient.build())
             .addConverterFactory(GsonConverterFactory.create())
             .validateEagerly(BuildConfig.DEBUG)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
+    }
+
+    override fun provideResponseValidator(): ResponseValidator {
+        return ResponseValidator
     }
 }

@@ -4,7 +4,9 @@ import com.example.core_network_api.di.CoreNetworkApi
 import dagger.Component
 import javax.inject.Singleton
 
-@Component(modules = [NetworkModule::class])
+@Component(modules = [
+    NetworkModule::class
+])
 @Singleton
 abstract class CoreNetworkComponent: CoreNetworkApi {
 
@@ -23,7 +25,5 @@ abstract class CoreNetworkComponent: CoreNetworkApi {
             return component!!
         }
     }
-
-
 
 }

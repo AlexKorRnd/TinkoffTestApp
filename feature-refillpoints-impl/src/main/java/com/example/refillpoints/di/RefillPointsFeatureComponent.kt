@@ -4,7 +4,9 @@ import com.example.core.di.PerFeature
 import com.example.core_network_api.di.CoreNetworkApi
 import com.example.feature_refillpoints_api.RefillPointsFeatureApi
 import com.example.refillpoints.presentation.view.RefillPointsActivity
+import com.example.refillpoints.presentation.view.RefillPointsView
 import dagger.Component
+import dagger.Provides
 
 @Component(
     modules = [

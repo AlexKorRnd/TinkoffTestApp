@@ -11,6 +11,6 @@ abstract class NetworkModule {
 
     @Singleton
     @Binds
-    abstract fun provideHttpClientApi(httpClient: HttpClientImpl): HttpClientApi
+    abstract fun provideHttpClient(httpClient: HttpClientImpl): HttpClientApi
 
 }

@@ -43,6 +43,7 @@ dependencies {
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
     implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}"
 
     def stetho = '1.5.1'
     implementation "com.facebook.stetho:stetho:$stetho"
