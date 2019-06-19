@@ -1,19 +1,35 @@
 package com.example.refillpoints.domain
 
 import com.example.refillpoints.data.network.responses.Location
-import com.example.refillpoints.data.network.responses.RefillPointsResponse
+import com.example.refillpoints.domain.models.RefillPointModel
 import io.reactivex.Single
 import javax.inject.Inject
 
 class RefillPointsInteractorImpl @Inject constructor(
     private val refillPointsRepository: RefillPointsRepository
-): RefillPointsInteractor {
+) : RefillPointsInteractor {
 
-    override fun loadRefillPoints(lat: Double, lng: Double, radius: Int): Single<List<RefillPointsResponse>> {
+    override fun loadRefillPoints(lat: Double, lng: Double, radius: Int): Single<List<RefillPointModel>> {
         return refillPointsRepository.loadRefillPoints(lat, lng, radius)
     }
 
-    override fun calculateRadius(
+    override fun loadRefillPoints(
+        lat: Double,
+        lng: Double,
+        topLeft: Location,
+        topRight: Location,
+        bottomRight: Location,
+        bottomLeft: Location
+    ): Single<List<RefillPointModel>> {
+
+        return calculateRadius(topLeft, topRight, bottomRight, bottomLeft)
+
+            .flatMap { radius ->
+                loadRefillPoints(lat, lng, radius)
+            }
+    }
+
+    private fun calculateRadius(
         topLeft: Location,
         topRight: Location,
         bottomRight: Location,

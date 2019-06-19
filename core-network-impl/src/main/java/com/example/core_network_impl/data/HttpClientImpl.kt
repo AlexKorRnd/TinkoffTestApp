@@ -13,7 +13,7 @@ import javax.inject.Inject
 class HttpClientImpl @Inject constructor(): HttpClientApi {
 
     companion object {
-        private const val REST_API_URL = "https://api.tinkoff.ru/v1/"
+        private const val REST_API_URL = "https://api.tinkoff.ru/"
     }
 
     override fun provideClient(): Retrofit {

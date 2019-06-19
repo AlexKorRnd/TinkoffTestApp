@@ -25,7 +25,4 @@ abstract class RefillPointsFeatureModule {
     @Binds
     abstract fun provideRefillPointsStarter(refillPointsStarter: RefillPointsStarterImpl): RefillPointsStarter
 
-    /*@PerFeature
-    @Binds
-    abstract fun provideRefillPointsView(refillPointsActivity: RefillPointsActivity): RefillPointsView*/
 }

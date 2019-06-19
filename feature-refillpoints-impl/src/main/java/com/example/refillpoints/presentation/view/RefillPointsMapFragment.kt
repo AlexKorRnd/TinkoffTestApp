@@ -3,7 +3,7 @@ package com.example.refillpoints.presentation.view
 import android.os.Bundle
 import android.util.Log
 import com.example.refillpoints.data.network.responses.Location
-import com.example.refillpoints.data.network.responses.RefillPointsResponse
+import com.example.refillpoints.domain.models.RefillPointModel
 import com.example.refillpoints.presentation.presenter.RefillPointsPresenter
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -13,32 +13,28 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 
-
-class RefillPointsMapFragment: SupportMapFragment(), OnMapReadyCallback,
+class RefillPointsMapFragment : SupportMapFragment(), OnMapReadyCallback,
     RefillPointsPageView {
 
     companion object {
         fun newInstance(): RefillPointsMapFragment =
-                RefillPointsMapFragment()
+            RefillPointsMapFragment()
     }
 
     private val parentPresenter: RefillPointsPresenter?
         get() = (activity as? RefillPointsActivity)?.presenter
 
-    //private lateinit var presenter: RefillPointsMapPresenter
-
     private var map: GoogleMap? = null
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
-        //presenter = RefillPointsMapPresenter()
 
         getMapAsync(this)
     }
 
     override fun onMapReady(map: GoogleMap) {
         this.map = map
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(RefillPointsActivity.TEST_LOCATION, 12F))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(RefillPointsActivity.TEST_LOCATION, 14F))
         map.setOnCameraIdleListener {
             val visibleRegion = map.projection.visibleRegion
             parentPresenter?.loadRefillPoints(
@@ -54,7 +50,7 @@ class RefillPointsMapFragment: SupportMapFragment(), OnMapReadyCallback,
 
     private fun LatLng.toLocation(): Location = Location(this.latitude, this.longitude)
 
-    override fun showRefillPoints(points: List<RefillPointsResponse>) {
+    override fun showRefillPoints(points: List<RefillPointModel>) {
         val map = map ?: return
         map.clear()
         Log.i("test________", "points.size = ${points.size}")
@@ -62,7 +58,7 @@ class RefillPointsMapFragment: SupportMapFragment(), OnMapReadyCallback,
             map.addMarker(
                 MarkerOptions()
                     .position(LatLng(it.location.latitude, it.location.longitude))
-                    .title(it.partnerName)
+                    .title(it.partner.name)
             )
             Log.i("test________", "point.address = ${it.fullAddress}")
         }

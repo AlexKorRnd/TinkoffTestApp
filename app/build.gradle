@@ -40,6 +40,12 @@ dependencies {
     implementation "com.google.dagger:dagger:${versions.dagger}"
     kapt("com.google.dagger:dagger-compiler:${versions.dagger}")
 
+    def stetho = '1.5.1'
+    implementation "com.facebook.stetho:stetho:$stetho"
+    implementation "com.facebook.stetho:stetho-okhttp3:$stetho"
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

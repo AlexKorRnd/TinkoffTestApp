@@ -1,13 +1,16 @@
 package com.example.refillpoints.presentation.view
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import com.example.refillpoints.BuildConfig
 import com.example.refillpoints.R
-import com.example.refillpoints.data.network.responses.RefillPointsResponse
 import com.example.refillpoints.di.RefillPointsFeatureComponent
+import com.example.refillpoints.domain.models.RefillPointModel
 import com.example.refillpoints.presentation.presenter.RefillPointsPresenter
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_refill_points.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class RefillPointsActivity: AppCompatActivity(), RefillPointsView {
@@ -24,13 +27,15 @@ class RefillPointsActivity: AppCompatActivity(), RefillPointsView {
     override fun onCreate(savedInstanceState: Bundle?) {
         RefillPointsFeatureComponent.get().inject(this)
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_refill_points)
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
 
         presenter.setView(this)
 
         setupPager()
-
-        presenter.loadRefillPoints(TEST_LOCATION.latitude, TEST_LOCATION.longitude, 1000)
     }
 
     override fun onPause() {
@@ -46,7 +51,7 @@ class RefillPointsActivity: AppCompatActivity(), RefillPointsView {
         tabLayout.setupWithViewPager(viewPager)
     }
 
-    override fun showRefillPoints(points: List<RefillPointsResponse>) {
+    override fun showRefillPoints(points: List<RefillPointModel>) {
         for (i in 0 until pagerAdapter.count) {
             (pagerAdapter.getRegisteredFragment(i) as? RefillPointsPageView)?.showRefillPoints(points)
         }
