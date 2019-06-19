@@ -1,25 +1,33 @@
 package com.example.refillpoints.presentation.refill_points.view
 
 import android.os.Bundle
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.refillpoints.BuildConfig
+import com.example.refillpoints.R
 import com.example.refillpoints.data.network.responses.Location
 import com.example.refillpoints.domain.models.RefillPointModel
 import com.example.refillpoints.presentation.refill_points.presenter.RefillPointsMapPresenter
 import com.example.refillpoints.presentation.refill_points.presenter.RefillPointsPresenter
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.content_bottom_sheet.*
 
 
-class RefillPointsMapFragment : SupportMapFragment(), OnMapReadyCallback,
+class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
     RefillPointsPageView, RefillPointsMapView {
 
     companion object {
         fun newInstance(): RefillPointsMapFragment =
             RefillPointsMapFragment()
+
+        private val BUNDLE_MAP_VIEW = "${BuildConfig.APPLICATION_ID}.args.BUNDLE_MAP_VIEW"
     }
 
     private val parentPresenter: RefillPointsPresenter?
@@ -28,13 +36,67 @@ class RefillPointsMapFragment : SupportMapFragment(), OnMapReadyCallback,
     private lateinit var presenter: RefillPointsMapPresenter
 
     private var map: GoogleMap? = null
+    private lateinit var bottomSheetDelegate: BottomSheetDelegate
+
+    private var mapView: MapView? = null
 
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
 
         presenter = RefillPointsMapPresenter(this)
+    }
 
-        getMapAsync(this)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_map, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mapView = view.findViewById(R.id.mapView)
+        mapView?.onCreate(savedInstanceState?.getBundle(BUNDLE_MAP_VIEW))
+
+        mapView?.getMapAsync(this)
+        setupBottomSheet()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView?.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView?.onResume()
+    }
+
+    override fun onPause() {
+        mapView?.onPause()
+        super.onPause()
+    }
+
+    override fun onStop() {
+        mapView?.onStop()
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        mapView?.onDestroy()
+        super.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        mapView?.onLowMemory()
+        super.onLowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        mapView?.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
+    }
+
+    private fun setupBottomSheet() {
+        bottomSheetDelegate = BottomSheetDelegate(vgBottomSheet)
     }
 
     override fun onMapReady(map: GoogleMap) {
@@ -68,7 +130,6 @@ class RefillPointsMapFragment : SupportMapFragment(), OnMapReadyCallback,
                 MarkerOptions()
                     .position(LatLng(point.location.latitude, point.location.longitude))
                     .title(point.partner.name)
-                    //.draggable(false)
             ).apply {
                 tag = point.externalId
             }
@@ -76,6 +137,7 @@ class RefillPointsMapFragment : SupportMapFragment(), OnMapReadyCallback,
     }
 
     override fun showPointInfo(refillPointModel: RefillPointModel) {
-        Toast.makeText(requireContext(), "${refillPointModel.fullAddress}, ${refillPointModel.partner.name}", Toast.LENGTH_LONG).show()
+        bottomSheetDelegate.bindAndOpen(refillPointModel)
+        //Toast.makeText(requireContext(), "${refillPointModel.fullAddress}, ${refillPointModel.partner.name}", Toast.LENGTH_LONG).show()
     }
 }
