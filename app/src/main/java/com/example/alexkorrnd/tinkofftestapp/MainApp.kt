@@ -3,6 +3,7 @@ package com.example.alexkorrnd.tinkofftestapp
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import androidx.multidex.MultiDex
 import com.example.alexkorrnd.tinkofftestapp.di.app.AppComponent
 import com.example.alexkorrnd.tinkofftestapp.di.app.DaggerAppComponent
 import com.example.refillpoints.data.db.DatabaseHolder
@@ -38,6 +39,11 @@ class MainApp: Application(), LifeCycleDelegate {
 
         DatabaseHolder.init(applicationContext)
         registerLifecycleHandler(AppLifecycleHandler(this))
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 
     override fun onAppBackgrounded() {

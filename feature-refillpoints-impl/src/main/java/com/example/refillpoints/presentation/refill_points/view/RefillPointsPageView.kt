@@ -1,9 +1,9 @@
-package com.example.refillpoints.presentation.view
+package com.example.refillpoints.presentation.refill_points.view
 
 import com.example.refillpoints.domain.models.RefillPointModel
 
-interface RefillPointsView {
+interface RefillPointsPageView {
 
     fun showRefillPoints(points: List<RefillPointModel>)
-    fun showError(error: Throwable)
+
 }

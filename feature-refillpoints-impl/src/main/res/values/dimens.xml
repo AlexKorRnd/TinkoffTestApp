@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="refill_point.item.icon.height">48dp</dimen>
+    <dimen name="refill_point.item.icon.width">48dp</dimen>
+    <dimen name="refill_point.item.decorator.height">0.5dp</dimen>
+</resources>

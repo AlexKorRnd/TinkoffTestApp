@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.example.core.di.PerFeature
 import com.example.feature_refillpoints_api.RefillPointsStarter
-import com.example.refillpoints.presentation.view.RefillPointsActivity
+import com.example.refillpoints.presentation.refill_points.view.RefillPointsActivity
 import javax.inject.Inject
 
 @PerFeature

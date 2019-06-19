@@ -1,11 +1,10 @@
-package com.example.refillpoints.presentation.presenter
+package com.example.refillpoints.presentation.refill_points.presenter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.example.core.base.RxBus
 import com.example.refillpoints.data.network.responses.Location
 import com.example.refillpoints.domain.RefillPointsInteractor
-import com.example.refillpoints.presentation.view.RefillPointsView
+import com.example.refillpoints.presentation.refill_points.view.RefillPointsView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber

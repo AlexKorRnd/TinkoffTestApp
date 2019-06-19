@@ -7,6 +7,7 @@ buildscript {
             rxJava          : '2.2.9',
             rxAndroid       : '2.1.1',
             retrofit        : '2.6.0',
+            glide           : '4.9.0',
     ]
     repositories {
         google()

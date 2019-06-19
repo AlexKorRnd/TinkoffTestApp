@@ -16,7 +16,8 @@
                 android:value="@string/google_maps_key"/>
 
         <activity
-                android:name=".presentation.view.RefillPointsActivity"
+                android:name="com.example.refillpoints.presentation.refill_points.view.RefillPointsActivity"
+                android:theme="@style/AppTheme"
         />
     </application>
 
