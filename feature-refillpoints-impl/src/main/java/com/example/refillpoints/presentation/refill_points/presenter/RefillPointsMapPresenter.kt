@@ -1,5 +1,6 @@
 package com.example.refillpoints.presentation.refill_points.presenter
 
+import com.example.refillpoints.domain.models.LocationModel
 import com.example.refillpoints.domain.models.RefillPointModel
 import com.example.refillpoints.presentation.refill_points.view.RefillPointsMapView
 import java.lang.ref.WeakReference
@@ -11,6 +12,8 @@ class RefillPointsMapPresenter(
     private val view = WeakReference(refillPointMapView)
 
     private var refillPointModels = mutableListOf<RefillPointModel>()
+    var myLocation: LocationModel? = null
+    var isDefault = true
 
     fun saveRefillPoints(points: List<RefillPointModel>) {
         refillPointModels.clear()

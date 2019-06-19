@@ -43,10 +43,7 @@ abstract class RefillPointsFeatureComponent: RefillPointsFeatureApi {
     }
 
 
-    fun resetComponent() {
-        refillPointsFeatureComponent = null
 
-    }
 
     abstract fun inject(activity: RefillPointsActivity)
 

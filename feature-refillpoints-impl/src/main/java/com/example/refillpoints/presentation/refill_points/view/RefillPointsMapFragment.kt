@@ -1,5 +1,6 @@
 package com.example.refillpoints.presentation.refill_points.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,9 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
         fun newInstance(): RefillPointsMapFragment =
             RefillPointsMapFragment()
 
-        private val BUNDLE_MAP_VIEW = "${BuildConfig.APPLICATION_ID}.args.BUNDLE_MAP_VIEW"
+        private const val BUNDLE_MAP_VIEW = "${BuildConfig.APPLICATION_ID}.args.BUNDLE_MAP_VIEW"
+
+        private const val DEFAULT_ZOOM = 14F
     }
 
     private val parentPresenter: RefillPointsPresenter?
@@ -106,7 +109,7 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
 
     override fun onMapReady(map: GoogleMap) {
         this.map = map
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(RefillPointsActivity.TEST_LOCATION, 14F))
+
         map.setOnCameraIdleListener {
             val visibleRegion = map.projection.visibleRegion
             parentPresenter?.loadRefillPoints(
@@ -118,10 +121,22 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
                 bottomRight = visibleRegion.nearRight.toLocation()
             )
         }
+        presenter.myLocation?.let { locationModel ->
+            moveCamera(locationModel)
+        }
         map.setOnMarkerClickListener { marker ->
             presenter.showRefillPointInfoById(marker.tag as? String)
             true
         }
+        map.uiSettings.isMyLocationButtonEnabled = true
+        map.uiSettings.isZoomControlsEnabled = true
+        map.setOnMyLocationButtonClickListener(object: GoogleMap.OnMyLocationButtonClickListener {
+            override fun onMyLocationButtonClick(): Boolean {
+                (activity as? RefillPointsActivity)?.findMyLocation()
+                return true
+            }
+        })
+
     }
 
     private fun LatLng.toLocation(): LocationModel = LocationModel(this.latitude, this.longitude)
@@ -144,5 +159,19 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
     override fun showPointInfo(refillPointModel: RefillPointModel) {
         bottomSheetDelegate.bindAndOpen(refillPointModel)
         //Toast.makeText(requireContext(), "${refillPointModel.fullAddress}, ${refillPointModel.partner.name}", Toast.LENGTH_LONG).show()
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun showMyLocation(locationModel: LocationModel, isDefault: Boolean) {
+        presenter.myLocation = locationModel
+        presenter.isDefault = isDefault
+        if (isDefault.not()) {
+            map?.isMyLocationEnabled = true
+        }
+        moveCamera(locationModel)
+    }
+
+    private fun moveCamera(locationModel: LocationModel) {
+        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(locationModel.latitude, locationModel.longitude), DEFAULT_ZOOM))
     }
 }

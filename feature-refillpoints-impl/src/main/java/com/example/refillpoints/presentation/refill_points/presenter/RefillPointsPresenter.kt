@@ -1,7 +1,6 @@
 package com.example.refillpoints.presentation.refill_points.presenter
 
 import android.annotation.SuppressLint
-import android.location.Location
 import com.example.core.base.RxBus
 import com.example.refillpoints.domain.RefillPointsInteractor
 import com.example.refillpoints.domain.models.LocationModel
@@ -22,6 +21,8 @@ class RefillPointsPresenter @Inject constructor(
     }
 
     private val rxBusLocations = RxBus<ChangedLocationEvent>()
+
+
 
     init {
         listeningChangedLocation()

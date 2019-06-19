@@ -1,10 +1,16 @@
+@file:JvmName("ContextExt")
 package com.example.core.base.extensions
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.Settings
 import android.util.DisplayMetrics
+import android.util.Log
+
+private const val TAG = "ContextExt"
 
 fun Context.screenDensityName(): String {
     return when(resources.displayMetrics.densityDpi) {
@@ -27,7 +33,7 @@ fun Context.browse(url: String, newTask: Boolean = false): Boolean {
         startActivity(intent)
         return true
     } catch (e: ActivityNotFoundException) {
-        e.printStackTrace()
+        Log.e(TAG, e.message, e)
         return false
     }
 }
@@ -38,7 +44,21 @@ fun Context.makeDial(phone: String): Boolean {
         startActivity(intent)
         return true
     } catch (e: ActivityNotFoundException) {
-        e.printStackTrace()
+        Log.e(TAG, e.message, e)
+        return false
+    }
+}
+
+fun Context.openAppSettings(activity: Activity): Boolean {
+    try {
+        val intent = Intent().apply {
+            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+            data = Uri.parse("package:" + activity.packageName)
+        }
+        startActivity(intent)
+        return true
+    } catch (e: ActivityNotFoundException) {
+        Log.e(TAG, e.message, e)
         return false
     }
 }

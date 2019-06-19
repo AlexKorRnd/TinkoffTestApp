@@ -6,7 +6,10 @@ import android.content.Context
 import androidx.multidex.MultiDex
 import com.example.alexkorrnd.tinkofftestapp.di.app.AppComponent
 import com.example.alexkorrnd.tinkofftestapp.di.app.DaggerAppComponent
+import com.example.core_network_impl.di.CoreNetworkComponent
 import com.example.refillpoints.data.db.DatabaseHolder
+import com.example.refillpoints.di.DaggerRefillPointsFeatureComponent_RefillPointsFeatureDependenciesComponent
+import com.example.refillpoints.di.RefillPointsFeatureComponent
 import com.facebook.stetho.Stetho
 import timber.log.Timber
 
@@ -36,6 +39,13 @@ class MainApp: Application(), LifeCycleDelegate {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+
+        RefillPointsFeatureComponent.initAndGet(
+            DaggerRefillPointsFeatureComponent_RefillPointsFeatureDependenciesComponent
+                .builder()
+                .coreNetworkApi(CoreNetworkComponent.get())
+                .build()
+        )
 
         DatabaseHolder.init(applicationContext)
         registerLifecycleHandler(AppLifecycleHandler(this))

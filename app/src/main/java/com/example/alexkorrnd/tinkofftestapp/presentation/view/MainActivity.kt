@@ -17,7 +17,7 @@ class MainActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         presenter = providePresenter()
-        presenter.showRefillPoints()
+        presenter.showRefillPoints(this)
         finish()
         super.onCreate(savedInstanceState)
     }

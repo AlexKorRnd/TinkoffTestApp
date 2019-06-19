@@ -1,9 +1,9 @@
 package com.example.feature_refillpoints_api
 
-import android.content.Context
+import android.app.Activity
 
 interface RefillPointsStarter {
 
-    fun start(context: Context)
+    fun start(activity: Activity)
 
 }

@@ -11,4 +11,9 @@
     <string name="refill_points_screen.detailed.work_hours">Часы работы</string>
     <string name="refill_points_screen.detailed.website">Сайт</string>
     <string name="refill_points_screen.detailed.phone">Телефон</string>
+
+    <string name="location_permission.need_enable_in_settings.title">Мы не знаем, где Вы</string>
+    <string name="location_permission.need_enable_in_settings.message">Разрешите доступ к геолокации для приложения в настройках устройства</string>
+    <string name="location_permission.need_enable_in_settings.button.positive">Разрешить</string>
+    <string name="location_permission.need_enable_in_settings.button.cancel">Отмена</string>
 </resources>

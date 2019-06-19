@@ -1,6 +1,6 @@
 package com.example.refillpoints.start
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import com.example.core.di.PerFeature
 import com.example.feature_refillpoints_api.RefillPointsStarter
@@ -10,9 +10,7 @@ import javax.inject.Inject
 @PerFeature
 class RefillPointsStarterImpl @Inject constructor(): RefillPointsStarter {
 
-    override fun start(context: Context) {
-        context.startActivity(Intent(context, RefillPointsActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        })
+    override fun start(activity: Activity) {
+        activity.startActivity(Intent(activity, RefillPointsActivity::class.java))
     }
 }

@@ -7,6 +7,10 @@ import com.example.refillpoints.di.RefillPointsFeatureComponent
 
 object FeatureProxyInjector {
 
+    fun initFeatureRefillPoints() {
+        featureRefillPoints()
+    }
+
     fun featureRefillPoints(): RefillPointsFeatureApi {
         return RefillPointsFeatureComponent.initAndGet(
             DaggerRefillPointsFeatureComponent_RefillPointsFeatureDependenciesComponent.builder()

@@ -1,15 +1,13 @@
 package com.example.alexkorrnd.tinkofftestapp.routing
 
-import android.content.Context
+import android.app.Activity
 import com.example.alexkorrnd.tinkofftestapp.di.FeatureProxyInjector
 import javax.inject.Singleton
 
 @Singleton
-class GlobalNavigator(
-    private val context: Context
-) : Navigator {
+class GlobalNavigator : Navigator {
 
-    fun showRefillPoints() {
-        FeatureProxyInjector.featureRefillPoints().refillPointsStarter().start(context)
+    fun showRefillPoints(activity: Activity) {
+        FeatureProxyInjector.featureRefillPoints().refillPointsStarter().start(activity)
     }
 }
