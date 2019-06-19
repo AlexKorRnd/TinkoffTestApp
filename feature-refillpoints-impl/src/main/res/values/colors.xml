@@ -3,4 +3,15 @@
     <color name="colorPrimary">#3E4757</color>
     <color name="colorPrimaryDark">#343D4C</color>
     <color name="colorAccent">#009ECF</color>
+
+    <!-- Text colors -->
+    <color name="dark_text_primary">#DE000000</color>
+    <color name="dark_text_secondary">#8A000000</color>
+    <color name="dark_text_disabled">#61000000</color>
+    <color name="dark_text_unfocused">#42000000</color>
+    <color name="dark_divider">#1F000000</color>
+
+    <color name="light_text_primary">#FFFFFF</color>
+    <color name="light_text_secondary">#B3FFFFFF</color>
+    <color name="light_divider">#1FFFFFFF</color>
 </resources>

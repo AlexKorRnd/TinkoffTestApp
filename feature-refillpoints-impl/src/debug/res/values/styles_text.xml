@@ -3,18 +3,9 @@
 
     <style name="AppTheme.TextAppearance" parent="@style/TextAppearance.AppCompat"/>
 
-    <!-- Text colors -->
-    <color name="dark_text_primary">#DE000000</color>
-    <color name="dark_text_secondary">#8A000000</color>
-    <color name="dark_text_disabled">#61000000</color>
-    <color name="dark_text_unfocused">#42000000</color>
-    <color name="dark_divider">#1F000000</color>
 
-    <color name="light_text_primary">#FFFFFF</color>
-    <color name="light_text_secondary">#B3FFFFFF</color>
-    <color name="light_divider">#1FFFFFFF</color>
 
-    <!-- Base styles -->
+    <!--&lt;!&ndash; Base styles &ndash;&gt;
     <style name="AppTheme.TextAppearance.HeadLine">
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/dark_text_primary</item>
@@ -85,6 +76,6 @@
         <item name="android:textColor">@color/dark_text_secondary</item>
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">sans-serif</item>
-    </style>
+    </style>-->
 
 </resources>

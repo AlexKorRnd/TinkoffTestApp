@@ -4,13 +4,13 @@ data class RefillPointsResponse(
     val addressInfo: String,
     val externalId: String,
     val fullAddress: String,
-    val location: Location,
+    val location: LocationResponse,
     val partnerName: String,
     val phones: String,
     val workHours: String
 )
 
-data class Location(
+data class LocationResponse(
     val latitude: Double,
     val longitude: Double
 )

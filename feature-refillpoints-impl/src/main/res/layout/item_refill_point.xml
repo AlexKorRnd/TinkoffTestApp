@@ -25,27 +25,27 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintStart_toEndOf="@id/ivIcon"
         app:layout_constraintTop_toTopOf="@id/ivIcon"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:textAppearance="@style/AppTheme.TextAppearance.SubHeading1"
         tools:text="Title"
-        android:maxLines="1"
-        android:ellipsize="end"
         />
 
     <TextView
         android:id="@+id/tvText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         app:layout_constraintStart_toStartOf="@id/tvTitle"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        android:layout_marginTop="4dp"
-        android:textAppearance="@style/AppTheme.TextAppearance.Body1"
         tools:text="Супермаркет"
-        android:maxLines="1"
-        android:ellipsize="end"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

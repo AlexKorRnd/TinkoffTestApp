@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.refillpoints.BuildConfig
 import com.example.refillpoints.R
-import com.example.refillpoints.data.network.responses.Location
+import com.example.refillpoints.domain.models.LocationModel
 import com.example.refillpoints.domain.models.RefillPointModel
+import com.example.refillpoints.presentation.Router
 import com.example.refillpoints.presentation.refill_points.presenter.RefillPointsMapPresenter
 import com.example.refillpoints.presentation.refill_points.presenter.RefillPointsPresenter
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -96,7 +97,11 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
     }
 
     private fun setupBottomSheet() {
-        bottomSheetDelegate = BottomSheetDelegate(vgBottomSheet)
+        bottomSheetDelegate = BottomSheetDelegate(vgBottomSheet) { refillPoint ->
+            refillPoint ?: return@BottomSheetDelegate
+            val context = context ?: return@BottomSheetDelegate
+            Router.openDetailedScreen(context, refillPoint)
+        }
     }
 
     override fun onMapReady(map: GoogleMap) {
@@ -119,7 +124,7 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
         }
     }
 
-    private fun LatLng.toLocation(): Location = Location(this.latitude, this.longitude)
+    private fun LatLng.toLocation(): LocationModel = LocationModel(this.latitude, this.longitude)
 
     override fun showRefillPoints(points: List<RefillPointModel>) {
         val map = map ?: return

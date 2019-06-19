@@ -3,4 +3,12 @@
     <string name="refill_points_screen.title">Точки пополнения</string>
     <string name="refill_points_screen.title.page.map.title">На карте</string>
     <string name="refill_points_screen.title.page.list.title">Список</string>
+    
+    <string name="refill_points_screen.detailed.title">Точка пополнения</string>
+    <string name="refill_points_screen.detailed.enrollment">Зачисление</string>
+    <string name="refill_points_screen.detailed.limits">Ограничения</string>
+    <string name="refill_points_screen.detailed.conditions">Условия</string>
+    <string name="refill_points_screen.detailed.work_hours">Часы работы</string>
+    <string name="refill_points_screen.detailed.website">Сайт</string>
+    <string name="refill_points_screen.detailed.phone">Телефон</string>
 </resources>

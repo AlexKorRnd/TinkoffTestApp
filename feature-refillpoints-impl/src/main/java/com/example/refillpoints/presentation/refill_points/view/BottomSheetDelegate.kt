@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.ViewCompat
+import com.example.core.base.extensions.onClickDebounce
 import com.example.core.base.extensions.screenDensityName
 import com.example.core.utils.ConstructPictureUrl
 import com.example.core.utils.ImageLoader
@@ -14,14 +15,23 @@ import com.example.refillpoints.domain.models.RefillPointModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class BottomSheetDelegate(
-        rootView: ViewGroup
+        rootView: ViewGroup,
+        private val callback: (refillPoint: RefillPointModel?) -> Unit
 ) {
 
     private val holder = Holder(rootView)
     private val behaviour = BottomSheetBehavior.from(rootView)
 
+    private var curItem: RefillPointModel? = null
+
+    init {
+        rootView.onClickDebounce {
+            callback(curItem)
+        }
+    }
 
     fun bindAndOpen(item: RefillPointModel) {
+        curItem = item
         behaviour.state = BottomSheetBehavior.STATE_EXPANDED
         with(holder) {
             ImageLoader.load(imageView = ivIcon, url = ConstructPictureUrl.construct(PartnerModel.PICTURE_URL_PREFIX, holder.view.context.screenDensityName(), item.partner.picture), isCircle = true)

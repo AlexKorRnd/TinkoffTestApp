@@ -1,9 +1,10 @@
 package com.example.refillpoints.presentation.refill_points.presenter
 
 import android.annotation.SuppressLint
+import android.location.Location
 import com.example.core.base.RxBus
-import com.example.refillpoints.data.network.responses.Location
 import com.example.refillpoints.domain.RefillPointsInteractor
+import com.example.refillpoints.domain.models.LocationModel
 import com.example.refillpoints.presentation.refill_points.view.RefillPointsView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -40,8 +41,8 @@ class RefillPointsPresenter @Inject constructor(
 
     @SuppressLint("CheckResult")
     private fun internalLoadRefillPoints(
-        lat: Double, lng: Double, topLeft: Location, topRight: Location, bottomRight: Location,
-        bottomLeft: Location
+            lat: Double, lng: Double, topLeft: LocationModel, topRight: LocationModel, bottomRight: LocationModel,
+            bottomLeft: LocationModel
     ) {
         refillPointsInteractor.loadRefillPoints(lat, lng, topLeft, topRight, bottomRight, bottomLeft)
             .subscribeOn(Schedulers.io())
@@ -58,8 +59,8 @@ class RefillPointsPresenter @Inject constructor(
 
     @SuppressLint("CheckResult")
     fun loadRefillPoints(
-        lat: Double, lng: Double, topLeft: Location, topRight: Location, bottomRight: Location,
-        bottomLeft: Location
+        lat: Double, lng: Double, topLeft: LocationModel, topRight: LocationModel, bottomRight: LocationModel,
+        bottomLeft: LocationModel
     ) {
         rxBusLocations.send(ChangedLocationEvent(lat, lng, topLeft, topRight, bottomRight, bottomLeft))
     }
@@ -71,9 +72,9 @@ class RefillPointsPresenter @Inject constructor(
     private class ChangedLocationEvent(
         val lat: Double,
         val lng: Double,
-        val topLeft: Location,
-        val topRight: Location,
-        val bottomRight: Location,
-        val bottomLeft: Location
+        val topLeft: LocationModel,
+        val topRight: LocationModel,
+        val bottomRight: LocationModel,
+        val bottomLeft: LocationModel
     )
 }

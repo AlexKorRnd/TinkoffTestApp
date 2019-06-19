@@ -27,7 +27,7 @@ fun DailyLimitResponse.toEntity(partnerEntity: PartnerEntity?) =
 
 fun LimitResponse.toEntity(partnerEntity: PartnerEntity?) = LimitEntity(partnerEntity, currency.toEntity(), min, max)
 
-fun Location.toEntity() = LocationEntity(latitude, longitude)
+fun LocationResponse.toEntity() = LocationEntity(latitude, longitude)
 
 fun RefillPointsResponse.toEntity(partnerEntity: PartnerEntity?, locationEntity: LocationEntity?) = RefillPointEntity(
     externalId,

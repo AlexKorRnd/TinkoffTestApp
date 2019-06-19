@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.base.decorators.LineDividerDecorator
 import com.example.refillpoints.R
 import com.example.refillpoints.domain.models.RefillPointModel
+import com.example.refillpoints.presentation.Router
 import com.example.refillpoints.presentation.refill_points.list.adapter.RefillPointsAdapter
 import com.example.refillpoints.presentation.refill_points.view.RefillPointsPageView
 import kotlinx.android.synthetic.main.fragment_refill_points_list.*
 
-class RefillPointsListFragment: Fragment(), RefillPointsPageView {
+class RefillPointsListFragment : Fragment(), RefillPointsPageView {
 
     companion object {
         fun newInstance() = RefillPointsListFragment()
@@ -26,7 +27,9 @@ class RefillPointsListFragment: Fragment(), RefillPointsPageView {
         super.onCreate(savedInstanceState)
 
         adapter = RefillPointsAdapter { position ->
-            // TODO: 19.06.19 need process click and navigate to detailed screen!
+            val context = context ?: return@RefillPointsAdapter
+            val item = adapter.getItem(position) ?: return@RefillPointsAdapter
+            Router.openDetailedScreen(context, item)
         }
     }
 
