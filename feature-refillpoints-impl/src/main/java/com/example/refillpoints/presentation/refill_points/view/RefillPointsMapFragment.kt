@@ -1,25 +1,31 @@
 package com.example.refillpoints.presentation.refill_points.view
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import com.example.refillpoints.BuildConfig
 import com.example.refillpoints.R
 import com.example.refillpoints.domain.models.LocationModel
 import com.example.refillpoints.domain.models.RefillPointModel
 import com.example.refillpoints.presentation.Router
+import com.example.refillpoints.presentation.refill_points.presenter.RefillPointsMapAdapter
 import com.example.refillpoints.presentation.refill_points.presenter.RefillPointsMapPresenter
 import com.example.refillpoints.presentation.refill_points.presenter.RefillPointsPresenter
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.content_bottom_sheet.*
+import timber.log.Timber
 
 
 class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
@@ -39,8 +45,8 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
 
     private lateinit var presenter: RefillPointsMapPresenter
 
-    private var map: GoogleMap? = null
     private lateinit var bottomSheetDelegate: BottomSheetDelegate
+    private var mapAdapter: RefillPointsMapAdapter? = null
 
     private var mapView: MapView? = null
 
@@ -100,16 +106,25 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
     }
 
     private fun setupBottomSheet() {
-        bottomSheetDelegate = BottomSheetDelegate(vgBottomSheet) { refillPoint ->
-            refillPoint ?: return@BottomSheetDelegate
-            val context = context ?: return@BottomSheetDelegate
-            Router.openDetailedScreen(context, refillPoint)
-        }
+        bottomSheetDelegate = BottomSheetDelegate(vgBottomSheet, object: BottomSheetDelegate.Callback {
+            override fun onDetailedInfoClick() {
+                val point = mapAdapter?.curSelectedPoint ?: return
+                parentPresenter?.updateRefillPointSeenStatus(point, true)
+                Router.openDetailedScreen(requireContext(), point)
+            }
+        })
     }
 
     override fun onMapReady(map: GoogleMap) {
-        this.map = map
-
+        mapAdapter = RefillPointsMapAdapter(
+            map = map,
+            curSelectedPointIcon = BitmapDescriptorFactory.defaultMarker(),
+            defaulPointIcon = BitmapDescriptorFactory.fromBitmap(ContextCompat.getDrawable(requireContext(), R.drawable.circle_shape)!!.mutate().toBitmap()),
+            seenPointIcon = BitmapDescriptorFactory.fromBitmap(ContextCompat.getDrawable(requireContext(), R.drawable.circle_shape)!!.mutate().apply {
+                setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN)
+            }.toBitmap())
+        )
+        presenter.setMapAdapter(mapAdapter!!)
         map.setOnCameraIdleListener {
             val visibleRegion = map.projection.visibleRegion
             parentPresenter?.loadRefillPoints(
@@ -125,7 +140,8 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
             moveCamera(locationModel)
         }
         map.setOnMarkerClickListener { marker ->
-            presenter.showRefillPointInfoById(marker.tag as? String)
+            Timber.i("showRefillPointForMarker")
+            presenter.showRefillPointForMarker(marker)
             true
         }
         map.uiSettings.isMyLocationButtonEnabled = true
@@ -142,23 +158,16 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
     private fun LatLng.toLocation(): LocationModel = LocationModel(this.latitude, this.longitude)
 
     override fun showRefillPoints(points: List<RefillPointModel>) {
-        val map = map ?: return
-        map.clear()
-        presenter.saveRefillPoints(points)
-        points.forEach { point ->
-            map.addMarker(
-                MarkerOptions()
-                    .position(LatLng(point.location.latitude, point.location.longitude))
-                    .title(point.partner.name)
-            ).apply {
-                tag = point.externalId
-            }
-        }
+        mapAdapter?.updateRefillPoints(points)
+    }
+
+    override fun showUpdatedRefillPointSeenStatus(point: RefillPointModel) {
+        mapAdapter?.updateMarker(point)
+        bottomSheetDelegate.bind(point)
     }
 
     override fun showPointInfo(refillPointModel: RefillPointModel) {
         bottomSheetDelegate.bindAndOpen(refillPointModel)
-        //Toast.makeText(requireContext(), "${refillPointModel.fullAddress}, ${refillPointModel.partner.name}", Toast.LENGTH_LONG).show()
     }
 
     @SuppressLint("MissingPermission")
@@ -166,12 +175,12 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
         presenter.myLocation = locationModel
         presenter.isDefault = isDefault
         if (isDefault.not()) {
-            map?.isMyLocationEnabled = true
+            mapAdapter?.map?.isMyLocationEnabled = true
         }
         moveCamera(locationModel)
     }
 
     private fun moveCamera(locationModel: LocationModel) {
-        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(locationModel.latitude, locationModel.longitude), DEFAULT_ZOOM))
+        mapAdapter?.map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(locationModel.latitude, locationModel.longitude), DEFAULT_ZOOM))
     }
 }

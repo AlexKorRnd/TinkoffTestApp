@@ -1,6 +1,7 @@
 package com.example.refillpoints.presentation.refill_points.list.adapter
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.example.core.base.BaseAdapter
 import com.example.core.base.extensions.onClickDebounce
 import com.example.refillpoints.domain.models.RefillPointModel
@@ -20,5 +21,12 @@ class RefillPointsAdapter(
 
     override fun onBindViewHolder(holder: RefillPointHolder, position: Int) {
         holder.bind(items[position])
+    }
+
+    fun updateItem(item: RefillPointModel) {
+        val index = items.indexOfFirst { it.externalId == item.externalId }
+        if (index != RecyclerView.NO_POSITION) {
+            replace(item, index)
+        }
     }
 }

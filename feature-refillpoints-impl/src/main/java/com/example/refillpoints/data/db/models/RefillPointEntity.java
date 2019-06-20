@@ -33,11 +33,13 @@ public class RefillPointEntity {
     @DatabaseField
     private String fullAddress;
 
+    @DatabaseField(foreign = true, canBeNull = true, columnName = RefillPointSeenEntity.ID_FIELD_NAME)
+    private RefillPointSeenEntity seenEntity;
+
     public RefillPointEntity() {
     }
 
-    public RefillPointEntity(String externalId, String workHours, String phones, String addresInfo, String fullAddress,
-                             PartnerEntity partner, LocationEntity location) {
+    public RefillPointEntity(String externalId, String workHours, String phones, String addresInfo, String fullAddress, PartnerEntity partner, LocationEntity location) {
         this.externalId = externalId;
         this.workHours = workHours;
         this.phones = phones;
@@ -65,5 +67,9 @@ public class RefillPointEntity {
 
     public String getFullAddress() {
         return fullAddress;
+    }
+
+    public void setSeenEntity(RefillPointSeenEntity seenEntity) {
+        this.seenEntity = seenEntity;
     }
 }

@@ -15,7 +15,13 @@ fun PartnerEntity.toModel() = PartnerModel(
         url = url,
         depositionDuration = depositionDuration,
         limitations = limitations,
-        description = description
+        description = description,
+        hasLocations = isHasLocations,
+        hasPreferentialDeposition = isHasPreferentialDeposition,
+        isMomentary = isMomentary,
+        moneyMax = moneyMax,
+        moneyMin = moneyMin,
+        pointType = pointType
         )
 
 fun PartnerResponse.toModel() = PartnerModel(
@@ -25,17 +31,24 @@ fun PartnerResponse.toModel() = PartnerModel(
         url = url,
         depositionDuration = depositionDuration,
         limitations = limitations,
-        description = description
+        description = description,
+        hasLocations = hasLocations,
+        hasPreferentialDeposition = hasPreferentialDeposition,
+        isMomentary = isMomentary,
+        moneyMax = moneyMax,
+        moneyMin = moneyMin,
+        pointType = pointType
 )
 
 fun LocationResponse.toModel() = LocationModel(latitude, longitude)
 
-fun RefillPointsResponse.toModel(partnerModel: PartnerModel) = RefillPointModel(
+fun RefillPointsResponse.toModel(partnerModel: PartnerModel, isSeen: Boolean) = RefillPointModel(
         partner = partnerModel,
         addressInfo = addressInfo,
         externalId = externalId,
         fullAddress = fullAddress,
         location = location.toModel(),
         phones = phones,
-        workHours = workHours
+        workHours = workHours,
+        isSeen = isSeen
 )

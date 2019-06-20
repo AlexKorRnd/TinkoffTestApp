@@ -3,6 +3,7 @@ package com.example.refillpoints.presentation.details.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.base.extensions.browse
@@ -61,6 +62,14 @@ class RefillPointDetailInfoActivity: AppCompatActivity(), RefillPointDetailedVie
         supportActionBar.setDisplayHomeAsUpEnabled(true)
         supportActionBar.setHomeButtonEnabled(true)
         supportActionBar.setDisplayUseLogoEnabled(false)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupRecyclerView() {

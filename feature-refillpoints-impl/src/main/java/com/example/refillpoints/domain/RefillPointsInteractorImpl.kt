@@ -3,6 +3,7 @@ package com.example.refillpoints.domain
 import android.location.Location
 import com.example.refillpoints.domain.models.LocationModel
 import com.example.refillpoints.domain.models.RefillPointModel
+import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -65,5 +66,9 @@ class RefillPointsInteractorImpl @Inject constructor(
             }
             Math.round(radius)
         }
+    }
+
+    override fun updateRefillPoint(refillPointModel: RefillPointModel): Single<RefillPointModel> {
+        return refillPointsRepository.updateRefillPoint(refillPointModel)
     }
 }

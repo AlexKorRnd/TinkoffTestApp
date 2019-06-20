@@ -2,7 +2,6 @@ package com.example.refillpoints.data.db
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.util.Log
 import com.example.refillpoints.data.db.models.*
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper
 import com.j256.ormlite.dao.Dao
@@ -26,9 +25,9 @@ class DatabaseHelper(
     private var limitDao: Dao<LimitEntity, Int>? = null
     private var dailyLimitDao: Dao<DailyLimitEntity, Int>? = null
     private var currencyDao: Dao<CurrencyEntity, Int>? = null
+    private var seenPointsDao: Dao<RefillPointSeenEntity, Int>? = null
 
     override fun onCreate(database: SQLiteDatabase?, connectionSource: ConnectionSource?) {
-        Log.i("DatabaseHelper", "onCreate")
         try {
             TableUtils.createTable(connectionSource, RefillPointEntity::class.java)
             TableUtils.createTable(connectionSource, PartnerEntity::class.java)
@@ -36,6 +35,7 @@ class DatabaseHelper(
             TableUtils.createTable(connectionSource, LimitEntity::class.java)
             TableUtils.createTable(connectionSource, DailyLimitEntity::class.java)
             TableUtils.createTable(connectionSource, CurrencyEntity::class.java)
+            TableUtils.createTable(connectionSource, RefillPointSeenEntity::class.java)
         } catch (e: SQLException) {
             Timber.e(e)
         }
@@ -47,12 +47,11 @@ class DatabaseHelper(
         oldVersion: Int,
         newVersion: Int
     ) {
-        Log.i("DatabaseHelper", "onUpgrade")
+        // TODO: 20.06.19 realize it
     }
 
     @Synchronized
     fun refillPointsDao(): Dao<RefillPointEntity, Int>? {
-        Log.i("DatabaseHelper", "refillPointsDao:: refillPointsDao = $refillPointsDao")
         if (refillPointsDao == null) {
             refillPointsDao = getDao(RefillPointEntity::class.java)
         }
@@ -99,4 +98,11 @@ class DatabaseHelper(
         return currencyDao
     }
 
+    @Synchronized
+    fun seenPointsDao(): Dao<RefillPointSeenEntity, Int>? {
+        if (seenPointsDao == null) {
+            seenPointsDao = getDao(RefillPointSeenEntity::class.java)
+        }
+        return seenPointsDao
+    }
 }

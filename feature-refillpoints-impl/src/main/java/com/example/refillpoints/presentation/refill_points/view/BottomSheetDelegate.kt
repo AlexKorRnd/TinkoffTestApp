@@ -16,27 +16,41 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class BottomSheetDelegate(
         rootView: ViewGroup,
-        private val callback: (refillPoint: RefillPointModel?) -> Unit
+        private val callback: Callback
 ) {
+
+    interface Callback {
+        fun onDetailedInfoClick()
+    }
 
     private val holder = Holder(rootView)
     private val behaviour = BottomSheetBehavior.from(rootView)
 
-    private var curItem: RefillPointModel? = null
-
     init {
         rootView.onClickDebounce {
-            callback(curItem)
+            callback.onDetailedInfoClick()
         }
     }
 
     fun bindAndOpen(item: RefillPointModel) {
-        curItem = item
+        bind(item)
+        open()
+    }
+
+    private fun open() {
         behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    fun bind(item: RefillPointModel) {
         with(holder) {
             ImageLoader.load(imageView = ivIcon, url = ConstructPictureUrl.construct(PartnerModel.PICTURE_URL_PREFIX, holder.view.context.screenDensityName(), item.partner.picture), isCircle = true)
             tvTitle.text = item.partner.name
             tvText.text = item.fullAddress
+            if (item.isSeen) {
+                tvSeen.visibility = View.VISIBLE
+            } else {
+                tvSeen.visibility = View.GONE
+            }
         }
     }
 
@@ -44,5 +58,6 @@ class BottomSheetDelegate(
         val ivIcon: ImageView = ViewCompat.requireViewById(view, R.id.ivIcon)
         val tvTitle: TextView = ViewCompat.requireViewById(view, R.id.tvTitle)
         val tvText: TextView = ViewCompat.requireViewById(view, R.id.tvText)
+        val tvSeen: TextView = ViewCompat.requireViewById(view, R.id.tvSeen)
     }
 }

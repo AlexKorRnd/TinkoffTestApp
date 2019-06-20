@@ -15,4 +15,6 @@ interface RefillPointsInteractor {
                          bottomRight: LocationModel,
                          bottomLeft: LocationModel
     ): Single<List<RefillPointModel>>
+
+    fun updateRefillPoint(refillPointModel: RefillPointModel): Single<RefillPointModel>
 }

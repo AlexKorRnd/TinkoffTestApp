@@ -2,6 +2,9 @@ package com.example.refillpoints.data.db.mappings
 
 import com.example.refillpoints.data.db.models.*
 import com.example.refillpoints.data.network.responses.*
+import com.example.refillpoints.domain.models.LocationModel
+import com.example.refillpoints.domain.models.PartnerModel
+import com.example.refillpoints.domain.models.RefillPointModel
 
 fun PartnerResponse.toEntity(): PartnerEntity =
     PartnerEntity(
@@ -37,4 +40,32 @@ fun RefillPointsResponse.toEntity(partnerEntity: PartnerEntity?, locationEntity:
     fullAddress,
     partnerEntity,
     locationEntity
+)
+
+fun PartnerModel.toEntity() = PartnerEntity(
+    id,
+    name,
+    picture,
+    url,
+    hasLocations,
+    isMomentary,
+    depositionDuration,
+    limitations,
+    pointType,
+    description,
+    moneyMin,
+    moneyMax,
+    hasPreferentialDeposition
+)
+
+fun LocationModel.toEntity() = LocationEntity(latitude, longitude)
+
+fun RefillPointModel.toEntity(): RefillPointEntity = RefillPointEntity(
+    externalId,
+    workHours,
+    phones,
+    addressInfo,
+    fullAddress,
+    partner.toEntity(),
+    location.toEntity()
 )

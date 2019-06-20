@@ -1,31 +1,31 @@
 package com.example.refillpoints.presentation.refill_points.presenter
 
 import com.example.refillpoints.domain.models.LocationModel
-import com.example.refillpoints.domain.models.RefillPointModel
 import com.example.refillpoints.presentation.refill_points.view.RefillPointsMapView
+import com.google.android.gms.maps.model.Marker
 import java.lang.ref.WeakReference
 
 class RefillPointsMapPresenter(
-    refillPointMapView: RefillPointsMapView
+        refillPointMapView: RefillPointsMapView
 ) {
 
     private val view = WeakReference(refillPointMapView)
 
-    private var refillPointModels = mutableListOf<RefillPointModel>()
     var myLocation: LocationModel? = null
     var isDefault = true
 
-    fun saveRefillPoints(points: List<RefillPointModel>) {
-        refillPointModels.clear()
-        refillPointModels.addAll(points)
+    private var mapAdapter: RefillPointsMapAdapter? = null
+
+    fun setMapAdapter(mapAdapter: RefillPointsMapAdapter) {
+        this.mapAdapter = mapAdapter
     }
 
-    fun showRefillPointInfoById(id: String?) {
-        refillPointModels.forEach {
-            if (it.externalId == id) {
-                view.get()?.showPointInfo(it)
-                return@forEach
-            }
+    fun showRefillPointForMarker(marker: Marker) {
+        val mapAdapter = mapAdapter ?: return
+        mapAdapter.selectMarker(marker)
+        mapAdapter.pointForMarker(marker)?.let {
+            view.get()?.showPointInfo(it)
         }
     }
+
 }

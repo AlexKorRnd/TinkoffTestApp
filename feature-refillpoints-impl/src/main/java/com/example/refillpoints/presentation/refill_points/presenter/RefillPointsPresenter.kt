@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.example.core.base.RxBus
 import com.example.refillpoints.domain.RefillPointsInteractor
 import com.example.refillpoints.domain.models.LocationModel
+import com.example.refillpoints.domain.models.RefillPointModel
 import com.example.refillpoints.presentation.refill_points.view.RefillPointsView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -21,7 +22,7 @@ class RefillPointsPresenter @Inject constructor(
     }
 
     private val rxBusLocations = RxBus<ChangedLocationEvent>()
-
+    private var view: WeakReference<RefillPointsView>? = null
 
 
     init {
@@ -56,14 +57,24 @@ class RefillPointsPresenter @Inject constructor(
             })
     }
 
-    private var view: WeakReference<RefillPointsView>? = null
-
     @SuppressLint("CheckResult")
     fun loadRefillPoints(
         lat: Double, lng: Double, topLeft: LocationModel, topRight: LocationModel, bottomRight: LocationModel,
         bottomLeft: LocationModel
     ) {
         rxBusLocations.send(ChangedLocationEvent(lat, lng, topLeft, topRight, bottomRight, bottomLeft))
+    }
+
+    @SuppressLint("CheckResult")
+    fun updateRefillPointSeenStatus(refillPointModel: RefillPointModel, isSeen: Boolean) {
+        refillPointsInteractor.updateRefillPoint(refillPointModel.copy(isSeen = isSeen))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ point ->
+                view?.get()?.showUpdatedRefillPointSeenStatus(point)
+            }, {
+
+            })
     }
 
     fun setView(view: RefillPointsView) {

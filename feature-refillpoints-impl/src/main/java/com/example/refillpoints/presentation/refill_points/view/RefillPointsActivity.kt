@@ -131,6 +131,12 @@ class RefillPointsActivity: AppCompatActivity(), RefillPointsView {
         }
     }
 
+    override fun showUpdatedRefillPointSeenStatus(point: RefillPointModel) {
+        for (i in 0 until pagerAdapter.count) {
+            (pagerAdapter.getRegisteredFragment(i) as? RefillPointsPageView)?.showUpdatedRefillPointSeenStatus(point)
+        }
+    }
+
     override fun showError(error: Throwable) {
         Toast.makeText(this, error.message, Toast.LENGTH_LONG).show()
     }

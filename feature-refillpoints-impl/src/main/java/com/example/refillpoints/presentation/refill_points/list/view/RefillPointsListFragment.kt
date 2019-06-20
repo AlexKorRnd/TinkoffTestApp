@@ -12,6 +12,8 @@ import com.example.refillpoints.R
 import com.example.refillpoints.domain.models.RefillPointModel
 import com.example.refillpoints.presentation.Router
 import com.example.refillpoints.presentation.refill_points.list.adapter.RefillPointsAdapter
+import com.example.refillpoints.presentation.refill_points.presenter.RefillPointsPresenter
+import com.example.refillpoints.presentation.refill_points.view.RefillPointsActivity
 import com.example.refillpoints.presentation.refill_points.view.RefillPointsPageView
 import kotlinx.android.synthetic.main.fragment_refill_points_list.*
 
@@ -23,12 +25,16 @@ class RefillPointsListFragment : Fragment(), RefillPointsPageView {
 
     private lateinit var adapter: RefillPointsAdapter
 
+    private val parentPresenter: RefillPointsPresenter?
+        get() = (activity as? RefillPointsActivity)?.presenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         adapter = RefillPointsAdapter { position ->
             val context = context ?: return@RefillPointsAdapter
             val item = adapter.getItem(position) ?: return@RefillPointsAdapter
+            parentPresenter?.updateRefillPointSeenStatus(item, true)
             Router.openDetailedScreen(context, item)
         }
     }
@@ -52,5 +58,9 @@ class RefillPointsListFragment : Fragment(), RefillPointsPageView {
     override fun showRefillPoints(points: List<RefillPointModel>) {
         adapter.clear()
         adapter.addAll(points)
+    }
+
+    override fun showUpdatedRefillPointSeenStatus(point: RefillPointModel) {
+        adapter.updateItem(point)
     }
 }

@@ -9,5 +9,5 @@ interface RefillPointsRepository {
     * */
     fun loadRefillPoints(lat: Double, lng: Double, radius: Int): Single<List<RefillPointModel>>
 
-
+    fun updateRefillPoint(refillPointModel: RefillPointModel): Single<RefillPointModel>
 }

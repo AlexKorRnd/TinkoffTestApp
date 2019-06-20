@@ -5,5 +5,6 @@ import com.example.refillpoints.domain.models.RefillPointModel
 interface RefillPointsView {
 
     fun showRefillPoints(points: List<RefillPointModel>)
+    fun showUpdatedRefillPointSeenStatus(point: RefillPointModel)
     fun showError(error: Throwable)
 }

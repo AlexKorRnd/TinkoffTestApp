@@ -10,18 +10,21 @@ data class RefillPointModel(
     val fullAddress: String,
     val location: LocationModel,
     val phones: String?,
-    val workHours: String?
-): Parcelable {
+    val workHours: String?,
+    val isSeen: Boolean
+) : Parcelable {
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     constructor(parcel: Parcel) : this(
-            parcel.readParcelable(PartnerModel::class.java.classLoader),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readParcelable(LocationModel::class.java.classLoader),
-            parcel.readString(),
-            parcel.readString()) {
+        parcel.readParcelable(PartnerModel::class.java.classLoader),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readParcelable(LocationModel::class.java.classLoader),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte()
+    ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -32,6 +35,7 @@ data class RefillPointModel(
         parcel.writeParcelable(location, flags)
         parcel.writeString(phones)
         parcel.writeString(workHours)
+        parcel.writeByte(if (isSeen) 1 else 0)
     }
 
     override fun describeContents(): Int {
