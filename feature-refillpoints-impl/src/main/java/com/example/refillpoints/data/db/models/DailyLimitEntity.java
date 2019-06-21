@@ -12,7 +12,7 @@ public class DailyLimitEntity {
     @DatabaseField(generatedId = true)
     private int id;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = PartnerEntity.ID_FIELD_NAME)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = PartnerEntity.ID_FIELD_FULL_NAME)
     private PartnerEntity partner;
 
     @DatabaseField(foreign = true, columnName = CurrencyEntity.CODE_FIELD_NAME)

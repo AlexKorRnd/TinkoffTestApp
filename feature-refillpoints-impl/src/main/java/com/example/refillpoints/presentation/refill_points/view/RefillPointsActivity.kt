@@ -26,10 +26,9 @@ import javax.inject.Inject
 class RefillPointsActivity: AppCompatActivity(), RefillPointsView {
 
     companion object {
-        // TODO: 20.06.19 moved it to repository
-        private val DEFAULT_LOCATION = LocationModel(55.751999, 37.617734)
-
         private const val REQUEST_CODE_LOCATION_PERMISSION = 11
+        // TODO: 20.06.19 moved it to repository
+        val DEFAULT_LOCATION = LocationModel(55.751999, 37.617734)
         private val LOCATION_UPDATES_TIME = TimeUnit.SECONDS.toMillis(5)
     }
 
@@ -60,7 +59,9 @@ class RefillPointsActivity: AppCompatActivity(), RefillPointsView {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        RefillPointsFeatureComponent.get().inject(this)
+        if (savedInstanceState == null) {
+            RefillPointsFeatureComponent.get().inject(this)
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_refill_points)
         presenter.setView(this)

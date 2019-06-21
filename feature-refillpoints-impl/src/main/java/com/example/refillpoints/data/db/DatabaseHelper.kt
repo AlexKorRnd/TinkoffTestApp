@@ -26,6 +26,7 @@ class DatabaseHelper(
     private var dailyLimitDao: Dao<DailyLimitEntity, Int>? = null
     private var currencyDao: Dao<CurrencyEntity, Int>? = null
     private var seenPointsDao: Dao<RefillPointSeenEntity, Int>? = null
+    private var pointsAreaDao: Dao<PointsInAreaEntities, Int>? = null
 
     override fun onCreate(database: SQLiteDatabase?, connectionSource: ConnectionSource?) {
         try {
@@ -36,6 +37,7 @@ class DatabaseHelper(
             TableUtils.createTable(connectionSource, DailyLimitEntity::class.java)
             TableUtils.createTable(connectionSource, CurrencyEntity::class.java)
             TableUtils.createTable(connectionSource, RefillPointSeenEntity::class.java)
+            TableUtils.createTable(connectionSource, PointsInAreaEntities::class.java)
         } catch (e: SQLException) {
             Timber.e(e)
         }
@@ -104,5 +106,13 @@ class DatabaseHelper(
             seenPointsDao = getDao(RefillPointSeenEntity::class.java)
         }
         return seenPointsDao
+    }
+
+    @Synchronized
+    fun pointsAreaDao(): Dao<PointsInAreaEntities, Int>? {
+        if (pointsAreaDao == null) {
+            pointsAreaDao = getDao(PointsInAreaEntities::class.java)
+        }
+        return pointsAreaDao
     }
 }

@@ -1,4 +1,4 @@
-package com.example.refillpoints.data.db.mappings
+package com.example.refillpoints.data.mappings
 
 import com.example.refillpoints.data.db.models.*
 import com.example.refillpoints.data.network.responses.*
@@ -25,22 +25,13 @@ fun PartnerResponse.toEntity(): PartnerEntity =
 
 fun CurrencyResponse.toEntity() = CurrencyEntity(code, name)
 
-fun DailyLimitResponse.toEntity(partnerEntity: PartnerEntity?) =
-    DailyLimitEntity(partnerEntity, currency.toEntity(), amount)
+fun DailyLimitResponse.toEntity(partnerEntity: PartnerEntity?, currencyEntity: CurrencyEntity) =
+    DailyLimitEntity(partnerEntity, currencyEntity, amount)
 
-fun LimitResponse.toEntity(partnerEntity: PartnerEntity?) = LimitEntity(partnerEntity, currency.toEntity(), min, max)
+fun LimitResponse.toEntity(partnerEntity: PartnerEntity?, currencyEntity: CurrencyEntity) = LimitEntity(partnerEntity, currencyEntity, min, max)
 
 fun LocationResponse.toEntity() = LocationEntity(latitude, longitude)
 
-fun RefillPointsResponse.toEntity(partnerEntity: PartnerEntity?, locationEntity: LocationEntity?) = RefillPointEntity(
-    externalId,
-    workHours,
-    phones,
-    addressInfo,
-    fullAddress,
-    partnerEntity,
-    locationEntity
-)
 
 fun PartnerModel.toEntity() = PartnerEntity(
     id,
@@ -60,12 +51,17 @@ fun PartnerModel.toEntity() = PartnerEntity(
 
 fun LocationModel.toEntity() = LocationEntity(latitude, longitude)
 
-fun RefillPointModel.toEntity(): RefillPointEntity = RefillPointEntity(
+
+fun RefillPointModel.toEntity(area: PointsInAreaEntities,
+                              partner: PartnerEntity,
+                              location: LocationEntity
+): RefillPointEntity = RefillPointEntity(
     externalId,
     workHours,
     phones,
     addressInfo,
     fullAddress,
-    partner.toEntity(),
-    location.toEntity()
+    partner,
+    location,
+    area
 )

@@ -25,7 +25,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.content_bottom_sheet.*
-import timber.log.Timber
 
 
 class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
@@ -36,6 +35,7 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
             RefillPointsMapFragment()
 
         private const val BUNDLE_MAP_VIEW = "${BuildConfig.APPLICATION_ID}.args.BUNDLE_MAP_VIEW"
+
 
         private const val DEFAULT_ZOOM = 14F
     }
@@ -106,7 +106,7 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
     }
 
     private fun setupBottomSheet() {
-        bottomSheetDelegate = BottomSheetDelegate(vgBottomSheet, object: BottomSheetDelegate.Callback {
+        bottomSheetDelegate = BottomSheetDelegate(vgBottomSheet, object : BottomSheetDelegate.Callback {
             override fun onDetailedInfoClick() {
                 val point = mapAdapter?.curSelectedPoint ?: return
                 parentPresenter?.updateRefillPointSeenStatus(point, true)
@@ -119,10 +119,20 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
         mapAdapter = RefillPointsMapAdapter(
             map = map,
             curSelectedPointIcon = BitmapDescriptorFactory.defaultMarker(),
-            defaulPointIcon = BitmapDescriptorFactory.fromBitmap(ContextCompat.getDrawable(requireContext(), R.drawable.circle_shape)!!.mutate().toBitmap()),
-            seenPointIcon = BitmapDescriptorFactory.fromBitmap(ContextCompat.getDrawable(requireContext(), R.drawable.circle_shape)!!.mutate().apply {
-                setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN)
-            }.toBitmap())
+            defaulPointIcon = BitmapDescriptorFactory.fromBitmap(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.circle_shape
+                )!!.mutate().toBitmap()
+            ),
+            seenPointIcon = BitmapDescriptorFactory.fromBitmap(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.circle_shape
+                )!!.mutate().apply {
+                    setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN)
+                }.toBitmap()
+            )
         )
         presenter.setMapAdapter(mapAdapter!!)
         map.setOnCameraIdleListener {
@@ -140,13 +150,12 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
             moveCamera(locationModel)
         }
         map.setOnMarkerClickListener { marker ->
-            Timber.i("showRefillPointForMarker")
             presenter.showRefillPointForMarker(marker)
             true
         }
         map.uiSettings.isMyLocationButtonEnabled = true
         map.uiSettings.isZoomControlsEnabled = true
-        map.setOnMyLocationButtonClickListener(object: GoogleMap.OnMyLocationButtonClickListener {
+        map.setOnMyLocationButtonClickListener(object : GoogleMap.OnMyLocationButtonClickListener {
             override fun onMyLocationButtonClick(): Boolean {
                 (activity as? RefillPointsActivity)?.findMyLocation()
                 return true
@@ -181,6 +190,13 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
     }
 
     private fun moveCamera(locationModel: LocationModel) {
-        mapAdapter?.map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(locationModel.latitude, locationModel.longitude), DEFAULT_ZOOM))
+        mapAdapter?.map?.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                LatLng(
+                    locationModel.latitude,
+                    locationModel.longitude
+                ), DEFAULT_ZOOM
+            )
+        )
     }
 }

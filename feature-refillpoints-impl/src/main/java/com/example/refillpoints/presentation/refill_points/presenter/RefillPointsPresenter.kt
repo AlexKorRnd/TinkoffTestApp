@@ -5,6 +5,7 @@ import com.example.core.base.RxBus
 import com.example.refillpoints.domain.RefillPointsInteractor
 import com.example.refillpoints.domain.models.LocationModel
 import com.example.refillpoints.domain.models.RefillPointModel
+import com.example.refillpoints.domain.models.ScreenRect
 import com.example.refillpoints.presentation.refill_points.view.RefillPointsView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -18,7 +19,7 @@ class RefillPointsPresenter @Inject constructor(
 ) {
 
     companion object {
-        private const val CHANGED_LOCATION_DEBOUNCE_MS = 250L
+        private const val CHANGED_LOCATION_DEBOUNCE_MS = 750L
     }
 
     private val rxBusLocations = RxBus<ChangedLocationEvent>()
@@ -46,7 +47,7 @@ class RefillPointsPresenter @Inject constructor(
             lat: Double, lng: Double, topLeft: LocationModel, topRight: LocationModel, bottomRight: LocationModel,
             bottomLeft: LocationModel
     ) {
-        refillPointsInteractor.loadRefillPoints(lat, lng, topLeft, topRight, bottomRight, bottomLeft)
+        refillPointsInteractor.loadRefillPoints(LocationModel(lat, lng), ScreenRect(topLeft, topRight, bottomRight, bottomLeft))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->

@@ -1,6 +1,8 @@
-package com.example.refillpoints.data.db.mappings
+package com.example.refillpoints.data.mappings
 
+import com.example.refillpoints.data.db.models.LocationEntity
 import com.example.refillpoints.data.db.models.PartnerEntity
+import com.example.refillpoints.data.db.models.RefillPointEntity
 import com.example.refillpoints.data.network.responses.LocationResponse
 import com.example.refillpoints.data.network.responses.PartnerResponse
 import com.example.refillpoints.data.network.responses.RefillPointsResponse
@@ -23,6 +25,19 @@ fun PartnerEntity.toModel() = PartnerModel(
         moneyMin = moneyMin,
         pointType = pointType
         )
+
+fun LocationEntity.toModel() = LocationModel(latitude, longitude)
+
+fun RefillPointEntity.toModel() = RefillPointModel(
+        partner = partner.toModel(),
+        addressInfo = addresInfo,
+        externalId = externalId,
+        fullAddress = fullAddress,
+        location = location.toModel(),
+        phones = phones,
+        workHours = workHours,
+        isSeen = seenEntity?.isSeen ?: false
+)
 
 fun PartnerResponse.toModel() = PartnerModel(
         id = id,

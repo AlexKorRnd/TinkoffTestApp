@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "466944943565",
+    "firebase_url": "https://testtinkoff-291ba.firebaseio.com",
+    "project_id": "testtinkoff-291ba",
+    "storage_bucket": "testtinkoff-291ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466944943565:android:e56bbe9e73b5fd54",
+        "android_client_info": {
+          "package_name": "com.example2.alexkorrnd.tinkofftestapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466944943565-sass185m94jhqf0ckpvrn5ump07coqvi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFNOc79kGNIGBWuPS_vTz-eNLfcLw9130"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466944943565-sass185m94jhqf0ckpvrn5ump07coqvi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

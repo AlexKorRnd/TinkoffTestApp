@@ -15,11 +15,14 @@ public class RefillPointEntity {
     @DatabaseField
     private String externalId;
 
-    @DatabaseField(foreign = true, columnName = PartnerEntity.ID_FIELD_NAME)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = PartnerEntity.ID_FIELD_FULL_NAME)
     private PartnerEntity partner;
 
-    @DatabaseField(foreign = true, columnName = LocationEntity.ID_FIELD_NAME)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = LocationEntity.ID_FIELD_NAME)
     private LocationEntity location;
+
+    @DatabaseField(foreign = true, columnName = PointsInAreaEntities.ID_FIELD_NAME)
+    private PointsInAreaEntities area;
 
     @DatabaseField
     private String workHours;
@@ -33,13 +36,13 @@ public class RefillPointEntity {
     @DatabaseField
     private String fullAddress;
 
-    @DatabaseField(foreign = true, canBeNull = true, columnName = RefillPointSeenEntity.ID_FIELD_NAME)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = RefillPointSeenEntity.ID_FIELD_NAME)
     private RefillPointSeenEntity seenEntity;
 
     public RefillPointEntity() {
     }
 
-    public RefillPointEntity(String externalId, String workHours, String phones, String addresInfo, String fullAddress, PartnerEntity partner, LocationEntity location) {
+    public RefillPointEntity(String externalId, String workHours, String phones, String addresInfo, String fullAddress, PartnerEntity partner, LocationEntity location, PointsInAreaEntities area) {
         this.externalId = externalId;
         this.workHours = workHours;
         this.phones = phones;
@@ -47,6 +50,7 @@ public class RefillPointEntity {
         this.fullAddress = fullAddress;
         this.partner = partner;
         this.location = location;
+        this.area = area;
     }
 
     public String getExternalId() {
@@ -71,5 +75,17 @@ public class RefillPointEntity {
 
     public void setSeenEntity(RefillPointSeenEntity seenEntity) {
         this.seenEntity = seenEntity;
+    }
+
+    public PartnerEntity getPartner() {
+        return partner;
+    }
+
+    public LocationEntity getLocation() {
+        return location;
+    }
+
+    public RefillPointSeenEntity getSeenEntity() {
+        return seenEntity;
     }
 }

@@ -16,10 +16,9 @@ fun Context.screenDensityName(): String {
     return when(resources.displayMetrics.densityDpi) {
         DisplayMetrics.DENSITY_MEDIUM -> "mdpi"
         DisplayMetrics.DENSITY_HIGH -> "hdpi"
-        DisplayMetrics.DENSITY_XHIGH -> "xdpi"
-        DisplayMetrics.DENSITY_XXHIGH -> "xxdpi"
-        DisplayMetrics.DENSITY_XXXHIGH -> "xxxdpi"
-        else -> "hdpi"
+        DisplayMetrics.DENSITY_XHIGH -> "xhdpi"
+        DisplayMetrics.DENSITY_XXHIGH -> "xxhdpi"
+        else -> "xxhdpi"
     }
 }
 

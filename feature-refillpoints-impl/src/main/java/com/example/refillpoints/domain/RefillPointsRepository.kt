@@ -1,13 +1,14 @@
 package com.example.refillpoints.domain
 
+import com.example.refillpoints.domain.models.LocationModel
 import com.example.refillpoints.domain.models.RefillPointModel
+import com.example.refillpoints.domain.models.ScreenRect
 import io.reactivex.Single
 
 interface RefillPointsRepository {
-    /**
-    *@param radius - радиус в метрах
-    * */
-    fun loadRefillPoints(lat: Double, lng: Double, radius: Int): Single<List<RefillPointModel>>
+
+    fun loadRefillPoints(centerPoint: LocationModel,
+                         screenRect: ScreenRect): Single<List<RefillPointModel>>
 
     fun updateRefillPoint(refillPointModel: RefillPointModel): Single<RefillPointModel>
 }

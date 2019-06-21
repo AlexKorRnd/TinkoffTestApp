@@ -9,7 +9,8 @@ import com.j256.ormlite.table.DatabaseTable;
 public class PartnerEntity {
 
     public static final String TABLE_NAME = "partner";
-    public static final String ID_FIELD_NAME = TABLE_NAME + "_id";
+    public static final String ID_FIELD_FULL_NAME = TABLE_NAME + "_id";
+    public static final String ID_FIELD_NAME = "id";
 
     @DatabaseField(id = true)
     private String id;
