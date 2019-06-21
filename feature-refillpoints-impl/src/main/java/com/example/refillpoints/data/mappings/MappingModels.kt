@@ -28,7 +28,7 @@ fun PartnerEntity.toModel() = PartnerModel(
 
 fun LocationEntity.toModel() = LocationModel(latitude, longitude)
 
-fun RefillPointEntity.toModel() = RefillPointModel(
+fun RefillPointEntity.toModel(isSeen: Boolean) = RefillPointModel(
         partner = partner.toModel(),
         addressInfo = addresInfo,
         externalId = externalId,
@@ -36,7 +36,7 @@ fun RefillPointEntity.toModel() = RefillPointModel(
         location = location.toModel(),
         phones = phones,
         workHours = workHours,
-        isSeen = seenEntity?.isSeen ?: false
+        isSeen = isSeen
 )
 
 fun PartnerResponse.toModel() = PartnerModel(

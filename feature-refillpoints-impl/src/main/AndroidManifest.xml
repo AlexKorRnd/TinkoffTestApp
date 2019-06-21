@@ -15,9 +15,9 @@
 
 
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key"
-            />
+                android:name="com.google.android.geo.API_KEY"
+                android:value="@string/google_maps_key"
+        />
 
         <activity
             android:name="com.example.refillpoints.presentation.refill_points.view.RefillPointsActivity"

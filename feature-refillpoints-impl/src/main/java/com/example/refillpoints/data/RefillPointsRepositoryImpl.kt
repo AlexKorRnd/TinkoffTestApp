@@ -61,11 +61,13 @@ class RefillPointsRepositoryImpl @Inject constructor(
                 loadPointsFromNetwork(centerPoint, screenRect)
             } else {
                 val points = mutableListOf<RefillPointModel>()
+                val seenPoints = DatabaseHolder.get().seenPointsDao()?.queryForAll() ?: emptyList()
                 val iterator = cachedItem.pointEntities.iterator()
                 while (iterator.hasNext()) {
                     val curItem = iterator.next()
                     if (curItem.location.toModel().inRect(screenRect)) {
-                        points.add(curItem.toModel())
+                        val isSeen = seenPoints.find { it.pointId == curItem.externalId }?.isSeen ?: false
+                        points.add(curItem.toModel(isSeen))
                     }
                 }
                 Single.just(points.toList())

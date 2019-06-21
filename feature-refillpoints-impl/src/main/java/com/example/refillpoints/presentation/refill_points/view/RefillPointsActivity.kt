@@ -59,9 +59,7 @@ class RefillPointsActivity: AppCompatActivity(), RefillPointsView {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            RefillPointsFeatureComponent.get().inject(this)
-        }
+        RefillPointsFeatureComponent.get().inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_refill_points)
         presenter.setView(this)

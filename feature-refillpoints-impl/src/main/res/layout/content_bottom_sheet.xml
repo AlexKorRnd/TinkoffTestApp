@@ -21,6 +21,7 @@
         android:layout_height="@dimen/refill_point.item.icon.height"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:transitionName="@string/partner_icon.transition_name"
         tools:background="@android:color/black"
         />
 

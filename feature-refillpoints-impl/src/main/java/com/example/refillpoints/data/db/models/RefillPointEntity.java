@@ -36,9 +36,6 @@ public class RefillPointEntity {
     @DatabaseField
     private String fullAddress;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = RefillPointSeenEntity.ID_FIELD_NAME)
-    private RefillPointSeenEntity seenEntity;
-
     public RefillPointEntity() {
     }
 
@@ -73,19 +70,11 @@ public class RefillPointEntity {
         return fullAddress;
     }
 
-    public void setSeenEntity(RefillPointSeenEntity seenEntity) {
-        this.seenEntity = seenEntity;
-    }
-
     public PartnerEntity getPartner() {
         return partner;
     }
 
     public LocationEntity getLocation() {
         return location;
-    }
-
-    public RefillPointSeenEntity getSeenEntity() {
-        return seenEntity;
     }
 }

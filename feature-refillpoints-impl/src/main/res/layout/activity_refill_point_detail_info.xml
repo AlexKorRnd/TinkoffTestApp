@@ -26,6 +26,7 @@
             tools:background="@android:color/black"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
+            android:transitionName="@string/partner_icon.transition_name"
             />
 
         <TextView

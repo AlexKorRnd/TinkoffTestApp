@@ -1,21 +1,26 @@
 package com.example.refillpoints.presentation.refill_points.list.adapter
 
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.base.BaseAdapter
 import com.example.core.base.extensions.onClickDebounce
 import com.example.refillpoints.domain.models.RefillPointModel
 
-typealias ItemClickListener = (position: Int) -> Unit
+
 
 class RefillPointsAdapter(
-    private val callback: ItemClickListener
+    private val callback: Callback
 ): BaseAdapter<RefillPointModel, RefillPointHolder>() {
+
+    interface Callback {
+        fun onItemClick(position: Int, ivIcon: ImageView)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RefillPointHolder =
             RefillPointHolder.create(parent).apply {
                 itemView.onClickDebounce {
-                    callback(adapterPosition)
+                    callback.onItemClick(adapterPosition, this.ivIcon)
                 }
             }
 

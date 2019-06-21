@@ -110,7 +110,7 @@ class RefillPointsMapFragment : Fragment(), OnMapReadyCallback,
             override fun onDetailedInfoClick() {
                 val point = mapAdapter?.curSelectedPoint ?: return
                 parentPresenter?.updateRefillPointSeenStatus(point, true)
-                Router.openDetailedScreen(requireContext(), point)
+                Router.openDetailedScreen(requireActivity(), ivIcon, point)
             }
         })
     }

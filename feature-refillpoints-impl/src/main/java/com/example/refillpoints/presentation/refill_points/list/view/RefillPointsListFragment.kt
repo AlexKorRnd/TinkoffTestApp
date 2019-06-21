@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,12 +32,14 @@ class RefillPointsListFragment : Fragment(), RefillPointsPageView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = RefillPointsAdapter { position ->
-            val context = context ?: return@RefillPointsAdapter
-            val item = adapter.getItem(position) ?: return@RefillPointsAdapter
-            parentPresenter?.updateRefillPointSeenStatus(item, true)
-            Router.openDetailedScreen(context, item)
-        }
+        adapter = RefillPointsAdapter(object: RefillPointsAdapter.Callback {
+            override fun onItemClick(position: Int, ivIcon: ImageView) {
+                val activity = activity ?: return
+                val item = adapter.getItem(position) ?: return
+                parentPresenter?.updateRefillPointSeenStatus(item, true)
+                Router.openDetailedScreen(activity, ivIcon, item)
+            }
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

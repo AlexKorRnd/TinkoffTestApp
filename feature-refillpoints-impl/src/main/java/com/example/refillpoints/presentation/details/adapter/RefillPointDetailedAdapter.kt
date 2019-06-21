@@ -4,7 +4,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.base.BaseAdapter
 import com.example.core.base.extensions.onClickDebounce
-import com.example.refillpoints.presentation.refill_points.list.adapter.ItemClickListener
+
+typealias ItemClickListener = (position: Int) -> Unit
 
 class RefillPointDetailedAdapter(
         private val callback: ItemClickListener

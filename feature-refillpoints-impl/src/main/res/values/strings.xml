@@ -18,4 +18,7 @@
     <string name="location_permission.need_enable_in_settings.message">Разрешите доступ к геолокации для приложения в настройках устройства</string>
     <string name="location_permission.need_enable_in_settings.button.positive">Разрешить</string>
     <string name="location_permission.need_enable_in_settings.button.cancel">Отмена</string>
+
+    <string name="partner_icon.transition_name" translatable="false">partner_icon.transition_name</string>
+    <string name="google_maps_key" translatable="false">AIzaSyCq7VYQxBdHddgzerbxUBiDlK052aloOGg</string>
 </resources>

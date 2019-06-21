@@ -16,7 +16,7 @@ import com.example.refillpoints.domain.models.RefillPointModel
 
 class RefillPointHolder(view: View): RecyclerView.ViewHolder(view) {
 
-    private val ivIcon: ImageView = ViewCompat.requireViewById(view, R.id.ivIcon)
+    val ivIcon: ImageView = ViewCompat.requireViewById(view, R.id.ivIcon)
     private val tvTitle: TextView = ViewCompat.requireViewById(view, R.id.tvTitle)
     private val tvText: TextView = ViewCompat.requireViewById(view, R.id.tvText)
     private val tvSeen: TextView = ViewCompat.requireViewById(view, R.id.tvSeen)
