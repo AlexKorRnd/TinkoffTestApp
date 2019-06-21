@@ -21,10 +21,12 @@
 
         <activity
             android:name="com.example.refillpoints.presentation.refill_points.view.RefillPointsActivity"
+            android:screenOrientation="portrait"
             />
 
         <activity
             android:name=".presentation.details.view.RefillPointDetailInfoActivity"
+            android:screenOrientation="portrait"
             />
     </application>
 
